@@ -1,17 +1,17 @@
 package com.example.guaumiau.domain.validation
 
 sealed interface ValidationError {
-    // Nombre
+    // nombre
     data object NameEmpty : ValidationError
     data object NameInvalidChars : ValidationError
     data object NameTooLong : ValidationError
 
-    // Email
+    // gmail
     data object EmailInvalidFormat : ValidationError
     data object EmailNotDuoc : ValidationError
     data object EmailAlreadyUsed : ValidationError
 
-    // Password
+    // contra
     data object PasswordTooShort : ValidationError
     data object PasswordNoUpper : ValidationError
     data object PasswordNoLower : ValidationError
@@ -19,10 +19,10 @@ sealed interface ValidationError {
     data object PasswordNoSpecial : ValidationError
     data object ConfirmPasswordMismatch : ValidationError
 
-    // Teléfono
+    // celular
     data object PhoneInvalid : ValidationError
 
-    // Mascotas
+    // animales
     data object PetTypeMissing : ValidationError
     data object PetNameEmpty : ValidationError
     data object PetNameTooLong : ValidationError
