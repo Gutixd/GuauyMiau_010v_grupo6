@@ -46,14 +46,10 @@ fun LoginScreen(
 
         Button(
             onClick = {
-                // intenta login y si es OK, navega
-                // Como el repo devuelve el id dentro del Result, ajustamos:
-                // aquí haremos una pequeña corrutina UI-friendly
-                // pero para simplificar, llamamos vm.login() y luego revisamos error
-                // en proyectos reales levantamos el userId desde repo/session.
-                // Para demo: tras login “exitoso” simulamos userId = 1
+                // intenta login 
+               
                 vm.login()
-                // Navegar cuando no haya error y no esté cargando
+                // navega cuando no haya  algun error
             },
             enabled = !state.isLoading,
             modifier = Modifier.fillMaxWidth()
@@ -66,10 +62,10 @@ fun LoginScreen(
         }
     }
 
-    // Observa cambios: si termina sin error y no está cargando, navega.
+    // solo sirve para observar e agregar canmbios 
     LaunchedEffect(state.isLoading, state.error) {
         if (!state.isLoading && state.error == null && state.email.isNotBlank()) {
-            onLoggedIn(1L) // en tu flujo real, reemplaza por el id del usuario logueado
+            onLoggedIn(1L) // en tu flujo real, reemplaza por el id de algun usuario que ya esta logueado
         }
     }
 }
