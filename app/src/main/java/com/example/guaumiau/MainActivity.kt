@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppRoot() {
-    // Usa tu tema (el que viene por defecto en ui.theme/Theme.kt)
+    
     GuauMiauTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             val nav = rememberNavController()
@@ -42,7 +42,7 @@ fun AppRoot() {
                 composable("register") {
                     RegisterScreen(
                         onBack = { nav.popBackStack() },
-                        onRegistered = { nav.popBackStack() } // tras registro vuelve a login
+                        onRegistered = { nav.popBackStack() } // despues vuelve a login
                     )
                 }
                 composable("pets/{userId}") { backStackEntry ->
