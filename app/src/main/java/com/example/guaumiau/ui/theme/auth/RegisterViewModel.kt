@@ -80,7 +80,7 @@ class RegisterViewModel @Inject constructor(
             _state.value = _state.value.copy(isSubmitting = false, error = reg.exceptionOrNull()?.message)
             return@launch
         }
-        // Normalmente agregarías mascotas después de tener userId (post-login).
+        // usualmente agregarias mascotas despues de tener userId que seria depsues de ahcer un login
         if (currentUserId != null) {
             s.pets.filter { it.type != null && it.name.isNotBlank() }.forEach {
                 petRepo.addPet(currentUserId, it.type, it.name)
