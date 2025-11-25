@@ -15,6 +15,7 @@ class LoginViewModel @Inject constructor(
     private val authRepo: AuthRepository
 ) : ViewModel() {
 
+    // es el estado de pantalla del login
     data class UiState(
         val email: String = "",
         val password: String = "",
@@ -25,6 +26,7 @@ class LoginViewModel @Inject constructor(
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()
 
+    // sirve para actualizar los cambios del formulario de login
     fun onChange(email: String? = null, password: String? = null) {
         _state.value = _state.value.copy(
             email = email ?: _state.value.email,
@@ -32,6 +34,7 @@ class LoginViewModel @Inject constructor(
         )
     }
 
+    // sirve para iniciar sesion con los datos ingresados en el formulario
     fun login() = viewModelScope.launch {
         _state.value = _state.value.copy(isLoading = true, error = null)
         val res = authRepo.login(_state.value.email, _state.value.password)

@@ -28,29 +28,31 @@ fun DogApiSection(
         viewModel.loadRandomDog()
     }
 
-    Column(modifier = modifier) {
-        Text(text = "Perrito aleatorio (API externa)")
+    Column(modifier = modifier) { //titulo
+        Text(text = "Perrito aleatorio de la api externa")
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        when {
+        when {//cuando esta cargando
             state.isLoading -> {
                 CircularProgressIndicator()
             }
+            // si hubo un error con la api
             state.error != null -> {
                 Text(text = "Error: ${state.error}")
                 Spacer(modifier = Modifier.height(4.dp))
                 Button(onClick = { viewModel.loadRandomDog() }) {
                     Text("Reintentar")
                 }
-            }
+            }// si la imagen llego bien
             state.imageUrl != null -> {
                 AsyncImage(
-                    model = state.imageUrl,
+                    model = state.imageUrl, //url entregada por la api
                     contentDescription = "Perrito",
                     modifier = Modifier
                         .size(200.dp)
                 )
+                //boton para cargar otro perro
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(onClick = { viewModel.loadRandomDog() }) {
                     Text("Otro perrito")

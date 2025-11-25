@@ -19,12 +19,12 @@ data class User(
 
     val email: String,
 
-    // Contraseña almacenada  
+    // contraseña almacenada
     val passwordHash: String,
 
-    // Teléfono que es opcional
+    // telefono que es opcional
     val phone: String? = null,
 
-    // Fecha de registro que tiene hasta microsegundos 
+    // fecha de registro que tiene hasta microsegundos
     val createdAt: Long = System.currentTimeMillis()
 )

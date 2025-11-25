@@ -16,20 +16,21 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    //Provee la base de datos Room como instancia única
 
     @Provides
-    @Singleton
+    @Singleton // provee la base de datos
     fun provideDatabase(@ApplicationContext ctx: Context): AppDatabase =
         Room.databaseBuilder(ctx, AppDatabase::class.java, "guau_miau.db").build()
 
-    @Provides
+    @Provides //provee UserDao
     fun provideUserDao(db: AppDatabase): UserDao = db.userDao()
 
-    @Provides
+    @Provides //lo provee PetDao
     fun providePetDao(db: AppDatabase): PetDao = db.petDao()
 
     @Provides
-    @Singleton
+    @Singleton //Provee el administrador de sesión
     fun provideSessionManager(@ApplicationContext ctx: Context): SessionManager =
         SessionManager(ctx)
 }

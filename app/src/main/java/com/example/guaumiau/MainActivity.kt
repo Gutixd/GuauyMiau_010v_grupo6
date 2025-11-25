@@ -36,6 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    //Configura la actividad principal y carga la UI
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,15 +46,18 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppRoot() {
+    // tema principal de la app
     GuauMiauTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
+            //navegation controlador
             val nav = rememberNavController()
-
             NavHost(
                 navController = nav,
+
+
                 startDestination = "welcome"
             ) {
-                // 🟣 Pantalla de bienvenida
+                // aqui esta la pantalla de bienvenida
                 composable("welcome") {
                     WelcomeScreen(
                         onGoLogin = {
@@ -67,7 +71,7 @@ fun AppRoot() {
                     )
                 }
 
-                // 🟣 Login
+                // login
                 composable("login") {
                     LoginScreen(
                         onGoRegister = { nav.navigate("register") },
@@ -79,7 +83,7 @@ fun AppRoot() {
                     )
                 }
 
-                // 🟣 Registro
+                // registro pantalla
                 composable("register") {
                     RegisterScreen(
                         onBack = { nav.popBackStack() },
@@ -96,7 +100,7 @@ fun AppRoot() {
                     PetsScreen(
                         userId = userId,
                         onLogout = {
-                            nav.navigate("login") { popUpTo(0) }
+                            nav.navigate("login") { popUpTo(0) } //cerrar sesion
                         },
                         onGoProfile = { uid ->
                             nav.navigate("profile/$uid")
@@ -110,7 +114,7 @@ fun AppRoot() {
                     )
                 }
 
-                // 🟣 Perfil de usuario (con Room)
+                // perfil de usuario usando room
                 composable("profile/{userId}") { backStackEntry ->
                     val userId = backStackEntry.arguments
                         ?.getString("userId")
@@ -125,14 +129,14 @@ fun AppRoot() {
                     )
                 }
 
-                // 🟣 Configuración
+                // configuracion
                 composable("settings") {
                     SettingsScreen(
                         onBack = { nav.popBackStack() }
                     )
                 }
 
-                // 🟣 Acerca de la app
+                // acerca de la app (se rompio)
                 composable("about") {
                     AboutAppScreen(
                         onBack = { nav.popBackStack() }
@@ -148,6 +152,7 @@ fun WelcomeScreen(
     onGoLogin: () -> Unit,
     onGoRegister: () -> Unit
 ) {
+    // pantalla inicial con lso botones de login y de regsitro
     Scaffold { padding ->
         Column(
             modifier = Modifier
@@ -197,6 +202,7 @@ fun ProfileScreen(
     onLogout: () -> Unit,
     vm: ProfileViewModel = hiltViewModel()
 ) {
+    //obtiene los datos del usuario desde el room
     val userState by vm.user.collectAsState()
 
     LaunchedEffect(userId) {
@@ -251,6 +257,8 @@ fun ProfileScreen(
 
 @Composable
 fun SmallTopAppBar(title: @Composable () -> Unit, navigationIcon: @Composable () -> Unit) {
+
+    //pendiente de implementacion
     TODO("Not yet implemented")
 }
 
@@ -314,6 +322,7 @@ fun SettingsScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutAppScreen(
+    // pantalla informativa sobre la app
     onBack: () -> Unit
 ) {
     Scaffold(

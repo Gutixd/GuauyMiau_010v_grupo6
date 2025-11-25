@@ -9,18 +9,23 @@ import com.example.guaumiau.domain.validation.Validators
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
-
+//  Repositorio encargado del registro, login y manejo de sesión del usuario
 @Singleton
 class AuthRepository @Inject constructor(
     private val userDao: UserDao,
     private val session: SessionManager
 ) {
+    /**
+     * Registra un usuario nuevo después de validar sus datos
+     * Retorna éxito o error según el resultado de la operación
+     */
     suspend fun register(
         fullName: String,
         email: String,
         password: String,
         phone: String?
     ): Result<Unit> {
+        // validaciones de campos
         val errors = buildList {
             addAll(Validators.validateFullName(fullName))
             addAll(Validators.validateEmail(email))
@@ -29,7 +34,7 @@ class AuthRepository @Inject constructor(
         }
         if (errors.isNotEmpty())
             return Result.failure(IllegalArgumentException(errors.joinToString()))
-
+        // Hash de contraseña e inserción
         val hash = PasswordHasher.hash(password)
         return try {
             userDao.insert(
@@ -42,6 +47,7 @@ class AuthRepository @Inject constructor(
             )
             Result.success(Unit)
         } catch (e: Exception) {
+            //gmail duplicado
             Result.failure(IllegalStateException(ValidationError.EmailAlreadyUsed.toString()))
         }
     }
@@ -55,6 +61,8 @@ class AuthRepository @Inject constructor(
         } else Result.failure(IllegalArgumentException("Credenciales inválidas"))
     }
 
+    //cierra sesion del usuario actual
     suspend fun logout() { session.setCurrentUser(null) }
+    // devuelve el ID del usuario logeado como Flow
     fun currentUserId(): Flow<Long?> = session.currentUserId
 }

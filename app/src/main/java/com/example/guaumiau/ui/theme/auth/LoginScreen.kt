@@ -8,13 +8,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
+// pantalla de inicio de sesion
 @Composable
 fun LoginScreen(
-    onGoRegister: () -> Unit,
-    onLoggedIn: (userId: Long) -> Unit,
+    onGoRegister: () -> Unit, // Navega a registro
+    onLoggedIn: (userId: Long) -> Unit,// Callback tras login exitoso
     vm: LoginViewModel = hiltViewModel()
 ) {
-    val state by vm.state.collectAsState()
+    val state by vm.state.collectAsState() // Estado reactivo desde el ViewModel
 
     Column(
         Modifier
@@ -23,14 +24,15 @@ fun LoginScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text("Iniciar sesión", style = MaterialTheme.typography.headlineMedium)
-
+// esto es del correo
         OutlinedTextField(
             value = state.email,
             onValueChange = { vm.onChange(email = it) },
-            label = { Text("Email DUOC") },
+            label = { Text("Correo DUOC") },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
+        // esto es de la contraseña
         OutlinedTextField(
             value = state.password,
             onValueChange = { vm.onChange(password = it) },
@@ -40,10 +42,12 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
+        // solo un mensaje de error
         if (state.error != null) {
             Text(state.error!!, color = MaterialTheme.colorScheme.error)
         }
 
+        // Boton de login
         Button(
             onClick = {
                 // intenta login 
@@ -57,6 +61,7 @@ fun LoginScreen(
             Text(if (state.isLoading) "Entrando..." else "Entrar")
         }
 
+        // para ir a registro
         TextButton(onClick = onGoRegister) {
             Text("Crear cuenta")
         }

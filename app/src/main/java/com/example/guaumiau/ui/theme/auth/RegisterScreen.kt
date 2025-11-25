@@ -14,16 +14,16 @@ import com.example.guaumiau.domain.model.PetType
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
-    onBack: () -> Unit,
-    onRegistered: () -> Unit,
-    vm: RegisterViewModel = hiltViewModel()
+    onBack: () -> Unit, //vuelve atras
+    onRegistered: () -> Unit, // accion cuando el registro funciona
+    vm: RegisterViewModel = hiltViewModel() //viewmodel iyectado por Hilt
 ) {
-    val state by vm.state.collectAsState()
+    val state by vm.state.collectAsState() // estado reactivo
 
     Scaffold(
         topBar = {
             TopAppBar(title = { Text("Crear cuenta") })
-        }
+        }// barra superior
     ) { padding ->
         LazyColumn(
             Modifier
@@ -31,6 +31,7 @@ fun RegisterScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            //Nombre completo
             item {
                 OutlinedTextField(
                     value = state.fullName,
@@ -40,6 +41,7 @@ fun RegisterScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
+            //gmail del duoc
             item {
                 OutlinedTextField(
                     value = state.email,
@@ -49,6 +51,7 @@ fun RegisterScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
+            //telefono
             item {
                 OutlinedTextField(
                     value = state.phone,
@@ -59,6 +62,7 @@ fun RegisterScreen(
                 )
             }
             item {
+                //contra
                 OutlinedTextField(
                     value = state.password,
                     onValueChange = { vm.onChange(password = it) },
@@ -69,6 +73,7 @@ fun RegisterScreen(
                 )
             }
             item {
+                // confirmacion de contra
                 OutlinedTextField(
                     value = state.confirm,
                     onValueChange = { vm.onChange(confirm = it) },
@@ -79,7 +84,7 @@ fun RegisterScreen(
                 )
             }
 
-            // Sección de mascotas (mínima)
+            // Sección de mascotas titulo.tipo de mascota, nombre
             itemsIndexed(state.pets) { index, row ->
                 Column(Modifier.fillMaxWidth()) {
                     Text("Mascota ${index + 1}", style = MaterialTheme.typography.titleMedium)
@@ -102,6 +107,7 @@ fun RegisterScreen(
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
+                    //quita la mascota
                     TextButton(onClick = { vm.removePetRow(index) }) {
                         Text("Quitar mascota")
                     }
@@ -109,10 +115,14 @@ fun RegisterScreen(
                 }
             }
 
+            //boton para agregar mascota y botn de registrarse
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    //agrega otra mascota
                     OutlinedButton(onClick = { vm.addPetRow() }) { Text("Agregar otra mascota") }
                     Spacer(Modifier.weight(1f))
+
+                    //envia los datos de registro
                     Button(
                         onClick = { vm.submit(currentUserId = null) },
                         enabled = !state.isSubmitting
@@ -120,9 +130,11 @@ fun RegisterScreen(
                 }
             }
 
+            //solo un error de validacion
             if (state.error != null) {
                 item { Text(state.error!!, color = MaterialTheme.colorScheme.error) }
             }
+            // mensaje de exito
             if (state.success) {
                 item {
                     Text("¡Registro exitoso!", color = MaterialTheme.colorScheme.primary)
@@ -130,6 +142,7 @@ fun RegisterScreen(
                 }
             }
 
+            // para volver atras
             item {
                 TextButton(onClick = onBack) { Text("Volver") }
             }

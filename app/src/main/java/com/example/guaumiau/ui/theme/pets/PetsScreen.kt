@@ -41,7 +41,7 @@ fun PetsScreen(
     vm: PetsViewModel = hiltViewModel()
 ) {
     val pets by vm.pets.collectAsState()
-    val dogVm: DogViewModel = hiltViewModel()   // 👈 NUEVA LÍNEA
+    val dogVm: DogViewModel = hiltViewModel()
 
     LaunchedEffect(userId) {
         if (userId > 0) vm.observePets(userId)

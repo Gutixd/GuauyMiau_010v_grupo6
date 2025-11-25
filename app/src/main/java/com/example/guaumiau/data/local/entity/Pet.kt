@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.example.guaumiau.domain.model.PetType
 
 @Entity(
-    tableName = "pets",
+    tableName = "pets", //bd nombre
     foreignKeys = [
         ForeignKey(
             entity = User::class,
@@ -18,9 +18,9 @@ import com.example.guaumiau.domain.model.PetType
     ],
     indices = [Index("userId")]
 )
-data class Pet(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+data class Pet( //tabla
+    @PrimaryKey(autoGenerate = true) val id: Long = 0, //llave primaria
     val userId: Long,
     val type: PetType,
     val name: String
-)
+) //

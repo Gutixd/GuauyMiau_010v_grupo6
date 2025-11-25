@@ -10,12 +10,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(user: User): Long
+    suspend fun insert(user: User): Long //inserta
 
     @Query("SELECT * FROM users WHERE email = :email LIMIT 1")
-    suspend fun getByEmail(email: String): User?
+    suspend fun getByEmail(email: String): User? //busca por email
+
 
     //id
     @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
-    suspend fun getById(id: Long): User?
+    suspend fun getById(id: Long): User? //busca por id
 }
